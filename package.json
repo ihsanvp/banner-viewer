@@ -1,0 +1,22 @@
+{
+  "name": "banner-viewer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "wasm:build": "wasm-pack build ./crate --target web",
+    "wasm:dev": "cargo watch -w crate -i .gitignore  -i \"pkg/*\" -s \"wasm-pack build ./crate --target web\"",
+    "web:build": "tsc && vite build",
+    "web:dev": "nodemon -e wasm,ts,js,json -w crate/pkg --exec pnpm vite",
+    "dev": "concurrently -n wasm,web -c red,blue \"pnpm wasm:dev\" \"pnpm web:dev\"",
+    "build": "pnpm wasm:build && pnpm web:build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2",
+    "vite-plugin-wasm-pack": "^0.1.12"
+  }
+}
